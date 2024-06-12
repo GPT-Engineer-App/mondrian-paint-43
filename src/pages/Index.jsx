@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Box, Button, Flex, HStack, VStack } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
+import { saveAs } from 'file-saver';
 
 const colors = ["#FF0000", "#FFFF00", "#0000FF", "#FFFFFF", "#000000"];
 const brushSizes = [5, 10, 15, 20, 25];
@@ -34,6 +35,13 @@ const Index = () => {
     const context = canvasRef.current.getContext("2d");
     context.closePath();
     setIsDrawing(false);
+  };
+
+  const downloadDrawing = () => {
+    const canvas = canvasRef.current;
+    canvas.toBlob((blob) => {
+      saveAs(blob, 'drawing.png');
+    });
   };
 
   return (
@@ -82,6 +90,7 @@ const Index = () => {
             </Button>
           ))}
         </HStack>
+        <Button onClick={downloadDrawing}>Download</Button>
       </Flex>
     </Box>
   );
