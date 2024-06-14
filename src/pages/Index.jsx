@@ -130,7 +130,7 @@ const Index = () => {
             </Button>
           ))}
         </HStack>
-        <Button onClick={downloadDrawing}><FaDownload /></Button>
+        <Button onClick={downloadDrawing} marginLeft="20px"><FaDownload /></Button>
       </Flex>
     </Box>
   );
