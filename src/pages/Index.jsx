@@ -3,7 +3,7 @@ import { Box, Button, Flex, HStack } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 import { saveAs } from 'file-saver';
 
-const colors = ["#FF0000", "#FFFF00", "#0000FF", "#FFFFFF", "#000000"];
+const colors = ["#FF0000", "#FFFF00", "#0000FF", "#FFFFFF"];
 const brushSizes = [5, 10, 15, 20, 25];
 
 const Index = () => {
