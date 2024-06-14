@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Box, Button, Flex, HStack } from "@chakra-ui/react";
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaDownload } from "react-icons/fa";
 import { saveAs } from 'file-saver';
 
 const colors = ["#FF0000", "#FFFF00", "#0000FF", "#FFFFFF"];
@@ -130,7 +130,7 @@ const Index = () => {
             </Button>
           ))}
         </HStack>
-        <Button onClick={downloadDrawing}>Download</Button>
+        <Button onClick={downloadDrawing}><FaDownload /></Button>
       </Flex>
     </Box>
   );
