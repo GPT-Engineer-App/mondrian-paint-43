@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Box, Button, Flex, HStack, VStack } from "@chakra-ui/react";
+import React, { useRef, useState, useEffect } from "react";
+import { Box, Button, Flex, HStack } from "@chakra-ui/react";
 import { FaCircle } from "react-icons/fa";
 import { saveAs } from 'file-saver';
 
@@ -11,6 +11,30 @@ const Index = () => {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentBrushSize, setCurrentBrushSize] = useState(brushSizes[0]);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [isShiftPressed, setIsShiftPressed] = useState(false);
+  const [lastPosition, setLastPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Shift") {
+        setIsShiftPressed(true);
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      if (event.key === "Shift") {
+        setIsShiftPressed(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
@@ -21,14 +45,30 @@ const Index = () => {
     context.beginPath();
     context.moveTo(offsetX, offsetY);
     setIsDrawing(true);
+    setLastPosition({ x: offsetX, y: offsetY });
   };
 
   const draw = ({ nativeEvent }) => {
     if (!isDrawing) return;
     const { offsetX, offsetY } = nativeEvent;
     const context = canvasRef.current.getContext("2d");
-    context.lineTo(offsetX, offsetY);
+
+    if (isShiftPressed) {
+      const { x, y } = lastPosition;
+      const dx = Math.abs(offsetX - x);
+      const dy = Math.abs(offsetY - y);
+
+      if (dx > dy) {
+        context.lineTo(offsetX, y);
+      } else {
+        context.lineTo(x, offsetY);
+      }
+    } else {
+      context.lineTo(offsetX, offsetY);
+    }
+
     context.stroke();
+    setLastPosition({ x: offsetX, y: offsetY });
   };
 
   const stopDrawing = () => {
