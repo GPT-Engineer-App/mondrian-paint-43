@@ -85,7 +85,7 @@ const Index = () => {
   };
 
   return (
-    <Box position="relative" height="100vh" width="100vw" bg="black">
+    <Box position="relative" height="100vh" width="100vw" bg="white">
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
@@ -94,7 +94,7 @@ const Index = () => {
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseLeave={stopDrawing}
-        style={{ display: "block", backgroundColor: "black" }}
+        style={{ display: "block", backgroundColor: "white" }}
       />
       <Flex
         position="absolute"
